@@ -64,33 +64,45 @@ class UserController extends Controller
     public function loginUser(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(),
-                [
-                    'email' => 'required|email',
-                    'password' => 'required',
-                ]);
+            // Validate the incoming request
+            $validateUser = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email', 'password']))){
+            // Attempt to log the user in
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
+                    'message' => 'Email & Password do not match our records.',
                 ], 401);
             }
 
+            // Retrieve the authenticated user by email
             $user = User::where('email', $request->email)->first();
 
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'roleName' => $user->roleName,
+                    'roleId' => $user->roleId,
+                    'email_verified_at' => $user->email_verified_at,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                ]
             ], 200);
 
         } catch (\Throwable $th) {
@@ -100,6 +112,7 @@ class UserController extends Controller
             ], 500);
         }
     }
+
     public function logout(Request $request)
     {
         $user = $request->user();
