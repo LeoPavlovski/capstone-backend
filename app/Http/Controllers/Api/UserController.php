@@ -22,10 +22,9 @@ class UserController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(),
                 [
-                    'name' => 'required',
                     'email' => 'required|email|unique:users,email',
                     'password' => 'required',
-                    'status'=>'required'
+                    'roleName'=>'required',
                 ]);
 
             if($validateUser->fails()){
@@ -37,9 +36,9 @@ class UserController extends Controller
             }
 
             $user = User::create([
-                'name' => $request->name,
                 'email' => $request->email,
-                'status'=>$request->status,
+                'roleName'=>$request->roleName,
+                'roleId'=>$request->roleId,
                 'password' => Hash::make($request->password)
             ]);
 
@@ -47,7 +46,6 @@ class UserController extends Controller
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'status'=>$request->status,
-                'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
         } catch (\Throwable $th) {
