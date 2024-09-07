@@ -24,7 +24,6 @@ class UserController extends Controller
                 [
                     'email' => 'required|email|unique:users,email',
                     'password' => 'required',
-                    'roleName'=>'required',
                 ]);
 
             if($validateUser->fails()){
@@ -37,7 +36,6 @@ class UserController extends Controller
 
             $user = User::create([
                 'email' => $request->email,
-                'roleName'=>$request->roleName,
                 'roleId'=>$request->roleId,
                 'password' => Hash::make($request->password)
             ]);
