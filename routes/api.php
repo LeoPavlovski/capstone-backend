@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'loginUser']);
+Route::middleware('auth:sanctum')->get('/signin-with-token', [UserController::class, 'signinWithToken']);
+
 Route::post('/auth/logout', [UserController::class, 'logout'])->middleware('auth:api');
 
 Route::apiResource('internships', InternshipController::class);
+

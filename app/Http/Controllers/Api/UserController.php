@@ -121,4 +121,33 @@ class UserController extends Controller
         $user->token()->revoke();
         return response()->json(['message' => 'Successfully logged out']);
     }
+    public function signinWithToken(Request $request)
+    {
+        // Retrieve the authenticated user
+        $user = $request->user();
+
+        // Check if the user is authenticated
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not authenticated'
+            ], 401);
+        }
+
+        // Return the user's data
+        return response()->json([
+            'status' => true,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roleName' => $user->roleName,
+                'roleId' => $user->roleId,
+                'email_verified_at' => $user->email_verified_at,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+                // Add any other user attributes you need
+            ]
+        ], 200);
+    }
 }

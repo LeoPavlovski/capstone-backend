@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('duration');
             $table->boolean('stipend')->default(false); // Boolean for stipend
             $table->date('deadline');
+            $table->unsignedBigInteger('user_id'); // Add user_id column
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,6 +33,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('internships', function (Blueprint $table) {
+            $table->dropForeign(['user_id']); // Drop the foreign key constraint
+        });
+
         Schema::dropIfExists('internships');
     }
 };
