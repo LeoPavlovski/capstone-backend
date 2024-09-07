@@ -24,6 +24,8 @@ class UserController extends Controller
                 [
                     'email' => 'required|email|unique:users,email',
                     'password' => 'required',
+                    'name'=>'required',
+                    'surname'=>'required'
                 ]);
 
             if($validateUser->fails()){
@@ -37,6 +39,8 @@ class UserController extends Controller
             $user = User::create([
                 'email' => $request->email,
                 'roleId'=>$request->roleId,
+                'surname'=>$request->surname,
+                'name'=>$request->name,
                 'password' => Hash::make($request->password)
             ]);
 
@@ -100,6 +104,7 @@ class UserController extends Controller
                     'email_verified_at' => $user->email_verified_at,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
+                    'surname'=>$user->surname
                 ]
             ], 200);
 
@@ -146,8 +151,13 @@ class UserController extends Controller
                 'email_verified_at' => $user->email_verified_at,
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
+                'surname'=>$user->surname
                 // Add any other user attributes you need
             ]
         ], 200);
+    }
+    public function index()
+    {
+        return response()->json(User::all());
     }
 }

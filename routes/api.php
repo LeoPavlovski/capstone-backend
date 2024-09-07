@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'loginUser']);
+Route::get('/user/getUsers', [UserController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/signin-with-token', [UserController::class, 'signinWithToken']);
+
 
 Route::post('/auth/logout', [UserController::class, 'logout'])->middleware('auth:api');
 
