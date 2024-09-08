@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InternshipController;
+use App\Http\Controllers\InvitationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,7 @@ Route::post('/auth/logout', [UserController::class, 'logout'])->middleware('auth
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('internships', InternshipController::class);
 Route::apiResource('courses', CourseController::class);
+
+Route::post('/invite', [InvitationController::class, 'invite']);
+Route::get('/student/{student_id}/invitations', [InvitationController::class, 'getStudentInvitations']);
 
