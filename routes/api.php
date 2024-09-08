@@ -36,4 +36,5 @@ Route::post('/invite', [InvitationController::class, 'invite']);
 Route::get('/student/{student_id}/invitations', [InvitationController::class, 'getStudentInvitations']);
 Route::post('/join-course', [StudentCourseController::class, 'joinCourse']);
 Route::get('/students/{id}/courses', [StudentCourseController::class, 'getStudentCourses']);
+Route::get('/professors/{professorId}/students', [StudentCourseController::class, 'getStudentsForProfessor']);
 

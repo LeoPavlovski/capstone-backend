@@ -28,6 +28,7 @@ class StudentCourseController extends Controller
 
         return response()->json(['message' => 'Successfully joined the course']);
     }
+
     public function getStudentCourses($studentId)
     {
         // Find the student by ID
@@ -38,9 +39,25 @@ class StudentCourseController extends Controller
             return response()->json(['message' => 'Student not found'], 404);
         }
 
-        // Retrieve the courses associated with the student
-        $courses = $student->courses()->get();
+        // Retrieve the courses associated with the student, including pivot data
+        $courses = $student->courses()->withPivot('created_at', 'updated_at')->get();
+
+        // Optionally, you can load additional user information if needed
+        // $courses->load('user');
 
         return response()->json($courses);
+    }
+    public function getStudentsForProfessor($professorId)
+    {
+        // Find the courses taught by the professor
+        $courses = Course::where('user_id', $professorId)->pluck('id');
+
+        // Fetch students who have joined these courses
+        $students = User::whereHas('courses', function($query) use ($courses) {
+            $query->whereIn('course_id', $courses);
+        })->where('roleId', 1) // Ensure this matches the roleId for students
+        ->get(['id', 'name', 'surname']);
+
+        return response()->json($students);
     }
 }
