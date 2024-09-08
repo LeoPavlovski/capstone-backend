@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\StudentCourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,6 @@ Route::apiResource('courses', CourseController::class);
 
 Route::post('/invite', [InvitationController::class, 'invite']);
 Route::get('/student/{student_id}/invitations', [InvitationController::class, 'getStudentInvitations']);
+Route::post('/join-course', [StudentCourseController::class, 'joinCourse']);
+Route::get('/students/{id}/courses', [StudentCourseController::class, 'getStudentCourses']);
 

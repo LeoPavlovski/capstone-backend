@@ -11,4 +11,8 @@ class Course extends Model
     protected $fillable = [
         'name', 'description', 'start_date', 'end_date', 'time', 'location', 'course_code', 'max_students', 'user_id',
     ];
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'students_courses', 'course_id', 'user_id');
+    }
 }
