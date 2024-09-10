@@ -50,4 +50,20 @@ class InvitationController extends Controller
 
         return response()->json(['invitations' => $invitations], 200);
     }
+    public function updateInvitationStatus(Request $request, $invitationId)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'status' => 'required|in:accepted,rejected',
+        ]);
+
+        // Find the invitation by ID
+        $invitation = InternshipStudent::findOrFail($invitationId);
+
+        // Update the status of the invitation
+        $invitation->status = $validated['status'];
+        $invitation->save();
+
+        return response()->json(['message' => 'Invitation status updated successfully'], 200);
+    }
 }

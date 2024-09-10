@@ -50,14 +50,19 @@ class StudentCourseController extends Controller
     public function getStudentsForProfessor($professorId)
     {
         // Find the courses taught by the professor
-        $courses = Course::where('user_id', $professorId)->pluck('id');
+        $courses = Course::where('user_id', $professorId)->get(['id', 'name', 'description']);
 
-        // Fetch students who have joined these courses
+        // Fetch students who have joined these courses, including course details
         $students = User::whereHas('courses', function($query) use ($courses) {
-            $query->whereIn('course_id', $courses);
+            $query->whereIn('courses.id', $courses->pluck('id')); // Specify 'courses.id' to avoid ambiguity
         })->where('roleId', 1) // Ensure this matches the roleId for students
-        ->get(['id', 'name', 'surname']);
+        ->with(['courses' => function($query) use ($courses) {
+            $query->whereIn('courses.id', $courses->pluck('id')) // Specify 'courses.id' here too
+            ->withPivot('created_at', 'updated_at');
+        }])
+            ->get(['users.id', 'name', 'surname', 'roleId']); // Specify 'users.id' explicitly
 
         return response()->json($students);
     }
+
 }

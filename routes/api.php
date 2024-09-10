@@ -25,6 +25,9 @@ Route::get('/user/getUsers', [UserController::class, 'index']);
 Route::get('courses/{id}/creator', [CourseController::class, 'getCreator']);
 Route::middleware('auth:sanctum')->get('/signin-with-token', [UserController::class, 'signinWithToken']);
 
+Route::put('/invitations/{invitationId}/status', [InvitationController::class, 'updateInvitationStatus']);
+
+
 
 
 Route::post('/auth/logout', [UserController::class, 'logout'])->middleware('auth:api');

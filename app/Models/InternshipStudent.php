@@ -13,6 +13,7 @@ class InternshipStudent extends Model
     protected $fillable = [
         'internship_id',
         'student_id',
+        'status'
     ];
     public function internship()
     {
