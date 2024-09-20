@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('companyWebsite');
-            $table->string('companySize');
+            $table->integer('companySize');
             $table->string('industry');
             $table->string('contactPersonName');
             $table->string('contactPersonEmail');
