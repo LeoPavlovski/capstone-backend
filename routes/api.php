@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\InvitationController;
@@ -41,3 +42,11 @@ Route::post('/join-course', [StudentCourseController::class, 'joinCourse']);
 Route::get('/students/{id}/courses', [StudentCourseController::class, 'getStudentCourses']);
 Route::get('/professors/{professorId}/students', [StudentCourseController::class, 'getStudentsForProfessor']);
 
+
+
+
+Route::get('/companies', [CompanyController::class, 'index']);
+Route::get('/companies/{id}', [CompanyController::class, 'show']);
+Route::post('/companies', [CompanyController::class, 'store']);
+Route::put('/companies/{id}', [CompanyController::class, 'update']);
+Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
