@@ -14,19 +14,23 @@ return new class extends Migration
         Schema::create('internships', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('company');
             $table->string('description');
-            $table->string('company');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('location');
             $table->string('duration');
             $table->boolean('stipend')->default(false); // Boolean for stipend
             $table->date('deadline');
-            $table->unsignedBigInteger('user_id'); // Add user_id column
+            $table->unsignedBigInteger('user_id'); // Define the user_id column
             $table->timestamps();
+
+            // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //$table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade'); // Foreign key for company_id
         });
     }
+
 
     /**
      * Reverse the migrations.

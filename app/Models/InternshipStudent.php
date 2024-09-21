@@ -15,6 +15,11 @@ class InternshipStudent extends Model
         'student_id',
         'status'
     ];
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id');
+    }
+
     public function internship()
     {
         return $this->belongsTo(Internship::class, 'internship_id');

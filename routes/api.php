@@ -43,6 +43,9 @@ Route::get('/students/{id}/courses', [StudentCourseController::class, 'getStuden
 Route::get('/professors/{professorId}/students', [StudentCourseController::class, 'getStudentsForProfessor']);
 
 
+Route::get('professor/{professor_id}/internships', [InvitationController::class, 'getProfessorInternships']);
+Route::put('/invitation/{invitationId}', [InvitationController::class, 'updateInvitationStatus']);
+
 
 
 Route::get('/companies', [CompanyController::class, 'index']);

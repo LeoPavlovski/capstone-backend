@@ -19,6 +19,6 @@ class Internship extends Model
         'stipend',
         'deadline',
         'description',
-        'user_id'
+        'user_id',
     ];
 }

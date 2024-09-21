@@ -64,6 +64,36 @@ class InvitationController extends Controller
         $invitation->status = $validated['status'];
         $invitation->save();
 
-        return response()->json(['message' => 'Invitation status updated successfully'], 200);
+        return response()->json(['message' => 'Invitation status updated successfully', 'invitation' => $invitation], 200);
+    }
+    public function getProfessorInternships($professor_id)
+    {
+        // Validate the professor ID
+        $professor_id = intval($professor_id);
+
+        // Check if the professor exists
+        $professorExists = \DB::table('users')->where('id', $professor_id)->where('roleId', 2)->exists();
+
+        if (!$professorExists) {
+            return response()->json(['message' => 'Professor not found'], 404);
+        }
+
+        // Fetch internships that the professor is supervising
+        $internships = \DB::table('internships')
+            ->where('user_id', $professor_id) // Assuming user_id is the professor's ID
+            ->get();
+
+        if ($internships->isEmpty()) {
+            return response()->json(['message' => 'No internships found for this professor'], 404);
+        }
+
+        // Fetch students that have joined these internships
+        $internshipIds = $internships->pluck('id')->toArray();
+
+        $students = InternshipStudent::whereIn('internship_id', $internshipIds)
+            ->with(['student', 'internship']) // Assuming relationships with student and internship models
+            ->get();
+
+        return response()->json(['internships' => $internships, 'students' => $students], 200);
     }
 }
