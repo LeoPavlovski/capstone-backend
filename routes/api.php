@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StudentCourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,3 +54,10 @@ Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::post('/companies', [CompanyController::class, 'store']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
+
+
+Route::get('news', [NewsController::class, 'index']);
+Route::post('news', [NewsController::class, 'store']);
+Route::get('news/{id}', [NewsController::class, 'show']);
+Route::put('news/{id}', [NewsController::class, 'update']);
+Route::delete('news/{id}', [NewsController::class, 'destroy']);
