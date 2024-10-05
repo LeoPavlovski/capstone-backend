@@ -29,9 +29,6 @@ Route::middleware('auth:sanctum')->get('/signin-with-token', [UserController::cl
 
 Route::put('/invitations/{invitationId}/status', [InvitationController::class, 'updateInvitationStatus']);
 
-
-
-
 Route::post('/auth/logout', [UserController::class, 'logout'])->middleware('auth:api');
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('internships', InternshipController::class);
@@ -61,3 +58,10 @@ Route::post('news', [NewsController::class, 'store']);
 Route::get('news/{id}', [NewsController::class, 'show']);
 Route::put('news/{id}', [NewsController::class, 'update']);
 Route::delete('news/{id}', [NewsController::class, 'destroy']);
+
+
+Route::post('/apply-internship', [InvitationController::class, 'applyForInternship']);
+Route::get('/student-internships', [InvitationController::class, 'getStudentCreatedInternships']);
+
+Route::get('/applications', [InvitationController::class, 'getAllApplications']);
+

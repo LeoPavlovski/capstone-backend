@@ -7,6 +7,50 @@ use Illuminate\Http\Request;
 
 class InvitationController extends Controller
 {
+    // Method to apply for an internship
+    public function applyForInternship(Request $request)
+    {
+        $validated = $request->validate([
+            'internship_id' => 'required|exists:internships,id',
+            'student_id' => 'required|exists:users,id',
+        ]);
+
+        // Check if the student is already applied
+        $exists = InternshipStudent::where('internship_id', $validated['internship_id'])
+            ->where('student_id', $validated['student_id'])
+            ->exists();
+
+        if ($exists) {
+            return response()->json(['message' => 'You have already applied for this internship'], 400);
+        }
+
+        // Create the application
+        $application = InternshipStudent::create([
+            'internship_id' => $validated['internship_id'],
+            'student_id' => $validated['student_id'],
+        ]);
+
+        return response()->json(['message' => 'Application submitted successfully', 'application' => $application], 201);
+    }
+
+    // Method to get internships made by students only
+    public function getStudentCreatedInternships(Request $request)
+    {
+        // Fetch internships that have been created by students (role ID 1)
+        $internships = \DB::table('internships')
+            ->whereIn('user_id', function ($query) {
+                $query->select('id')->from('users')->where('roleId', 1);
+            })
+            ->get();
+
+        if ($internships->isEmpty()) {
+            return response()->json(['message' => 'No internships found created by students'], 404);
+        }
+
+        return response()->json(['internships' => $internships], 200);
+    }
+
+    // Existing methods...
     public function invite(Request $request)
     {
         $validated = $request->validate([
@@ -31,6 +75,7 @@ class InvitationController extends Controller
 
         return response()->json(['message' => 'Invitation sent successfully', 'invitation' => $invitation], 201);
     }
+
     public function getStudentInvitations($student_id)
     {
         // Validate the student ID
@@ -50,6 +95,19 @@ class InvitationController extends Controller
 
         return response()->json(['invitations' => $invitations], 200);
     }
+    public function getAllApplications()
+    {
+        // Fetch all applications with their associated internships
+        $applications = InternshipStudent::with('internship')
+        ->get();
+
+        if ($applications->isEmpty()) {
+            return response()->json(['message' => 'No applications found'], 404);
+        }
+
+        return response()->json(['applications' => $applications], 200);
+    }
+
     public function updateInvitationStatus(Request $request, $invitationId)
     {
         // Validate the incoming request
@@ -66,6 +124,7 @@ class InvitationController extends Controller
 
         return response()->json(['message' => 'Invitation status updated successfully', 'invitation' => $invitation], 200);
     }
+
     public function getProfessorInternships($professor_id)
     {
         // Validate the professor ID
