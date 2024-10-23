@@ -39,6 +39,7 @@ Route::get('/student/{student_id}/invitations', [InvitationController::class, 'g
 Route::post('/join-course', [StudentCourseController::class, 'joinCourse']);
 Route::get('/students/{id}/courses', [StudentCourseController::class, 'getStudentCourses']);
 Route::get('/professors/{professorId}/students', [StudentCourseController::class, 'getStudentsForProfessor']);
+Route::post('/leave-course', [StudentCourseController::class, 'leaveCourse']);
 
 
 Route::get('professor/{professor_id}/internships', [InvitationController::class, 'getProfessorInternships']);

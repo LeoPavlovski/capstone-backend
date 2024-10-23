@@ -15,7 +15,6 @@ class Internship extends Model
         'start_date',
         'end_date',
         'location',
-        'duration',
         'stipend',
         'deadline',
         'description',

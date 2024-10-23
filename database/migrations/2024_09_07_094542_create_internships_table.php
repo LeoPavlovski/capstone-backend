@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('location');
-            $table->string('duration');
             $table->boolean('stipend')->default(false); // Boolean for stipend
             $table->date('deadline');
             $table->unsignedBigInteger('user_id'); // Define the user_id column

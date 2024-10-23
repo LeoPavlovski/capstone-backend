@@ -18,6 +18,11 @@ class StudentCourseController extends Controller
         $user = User::find($validated['user_id']);
         $course = Course::find($validated['course_id']);
 
+        // Check if the course is full
+        if ($course->max_students <= 0) {
+            return response()->json(['message' => 'The course is full'], 400);
+        }
+
         // Check if the user has already joined the course
         if ($user->courses()->where('course_id', $validated['course_id'])->exists()) {
             return response()->json(['message' => 'You have already joined this course'], 400);
@@ -26,9 +31,34 @@ class StudentCourseController extends Controller
         // Attach the student to the course
         $user->courses()->attach($validated['course_id']);
 
-        return response()->json(['message' => 'Successfully joined the course']);
-    }
+        // Decrement the max_students count
+        $course->decrement('max_students'); // This automatically updates the max_students field
 
+        return response()->json(['message' => 'Successfully joined the course', 'remaining_spots' => $course->max_students]);
+    }
+    public function leaveCourse(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'course_id' => 'required|exists:courses,id',
+        ]);
+
+        $user = User::find($validated['user_id']);
+        $course = Course::find($validated['course_id']);
+
+        // Check if the user is actually enrolled in the course
+        if (!$user->courses()->where('course_id', $validated['course_id'])->exists()) {
+            return response()->json(['message' => 'You are not enrolled in this course'], 400);
+        }
+
+        // Detach the student from the course
+        $user->courses()->detach($validated['course_id']);
+
+        // Increment the max_students count
+        $course->increment('max_students'); // This automatically updates the max_students field
+
+        return response()->json(['message' => 'Successfully left the course', 'remaining_spots' => $course->max_students]);
+    }
     public function getStudentCourses($studentId)
     {
         // Find the student by ID
