@@ -19,6 +19,7 @@ class Company extends Model
         'address',
         'linkedin',
         'twitter',
+        'department',
         'name',
         'user_id',
     ];

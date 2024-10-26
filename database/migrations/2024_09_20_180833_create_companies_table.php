@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('companyWebsite');
             $table->integer('companySize');
             $table->string('industry');
+            $table->integer('department');
             $table->string('contactPersonName');
             $table->string('contactPersonEmail');
             $table->string('contactPersonPhone');

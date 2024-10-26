@@ -26,7 +26,8 @@ class UserController extends Controller
                     'password' => 'required',
                     'name'=>'required',
                     'surname'=>'required',
-                    'department'=>'required'
+                    'department'=>'required',
+                    'departmentName'=>'required'
                 ]);
 
             if($validateUser->fails()){
@@ -43,6 +44,7 @@ class UserController extends Controller
                 'surname'=>$request->surname,
                 'name'=>$request->name,
                 'department'=>$request->department,
+                'departmentName'=>$request->departmentName,
                 'password' => Hash::make($request->password)
             ]);
 
@@ -104,6 +106,7 @@ class UserController extends Controller
                     'department'=>$user->department,
                     'roleName' => $user->roleName,
                     'roleId' => $user->roleId,
+                    'departmentName'=>$user->departmentName,
                     'email_verified_at' => $user->email_verified_at,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
@@ -155,7 +158,8 @@ class UserController extends Controller
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
                 'surname'=>$user->surname,
-                'department'=>$user->department
+                'department'=>$user->department,
+                'departmentName'=>$user->departmentName
                 // Add any other user attributes you need
             ]
         ], 200);
