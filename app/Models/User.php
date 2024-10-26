@@ -23,6 +23,7 @@ class User extends Authenticatable
         'roleId',
         'roleName',
         'name',
+        'department',
         'surname'
     ];
 

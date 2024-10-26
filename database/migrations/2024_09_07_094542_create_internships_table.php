@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('location');
             $table->boolean('stipend')->default(false); // Boolean for stipend
             $table->date('deadline');
-            $table->unsignedBigInteger('user_id'); // Define the user_id column
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             // Foreign key constraints
