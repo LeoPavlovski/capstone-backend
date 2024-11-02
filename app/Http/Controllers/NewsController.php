@@ -22,6 +22,7 @@ class NewsController extends Controller
             'content' => 'required|string',
             'author' => 'required|string|max:255',
             'publication_date' => 'required|date',
+            'department' => 'required|integer',
         ]);
 
         // Create new news entry
@@ -44,6 +45,7 @@ class NewsController extends Controller
             'content' => 'sometimes|required|string',
             'author' => 'sometimes|required|string|max:255',
             'publication_date' => 'sometimes|required|date',
+            'department' => 'required|integer',
         ]);
 
         // Update news
