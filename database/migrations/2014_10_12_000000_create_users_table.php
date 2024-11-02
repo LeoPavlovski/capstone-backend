@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('roleName')->nullable();
             $table->string('surname')->nullable();
             $table->integer('roleId');
+            $table->integer('userCreatedBy')->nullable();
             $table->integer('department')->nullable();
             $table->string('departmentName')->nullable();
             $table->timestamp('email_verified_at')->nullable();

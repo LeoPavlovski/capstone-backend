@@ -43,6 +43,7 @@ class UserController extends Controller
                 'roleId'=>$request->roleId,
                 'surname'=>$request->surname,
                 'name'=>$request->name,
+                'userCreatedBy'=>$request->userCreatedBy,
                 'department'=>$request->department,
                 'departmentName'=>$request->departmentName,
                 'password' => Hash::make($request->password)
@@ -110,7 +111,8 @@ class UserController extends Controller
                     'email_verified_at' => $user->email_verified_at,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
-                    'surname'=>$user->surname
+                    'surname'=>$user->surname,
+                    'userCreatedBy'=>$user->userCreatedBy
                 ]
             ], 200);
 
