@@ -20,4 +20,9 @@ class Internship extends Model
         'description',
         'user_id',
     ];
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_internship'); // Many-to-many pivot table
+    }
+
 }

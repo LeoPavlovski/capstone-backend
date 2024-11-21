@@ -66,3 +66,9 @@ Route::get('/student-internships', [InvitationController::class, 'getStudentCrea
 
 Route::get('/applications', [InvitationController::class, 'getAllApplications']);
 
+Route::post('/internships/{internshipId}/join', [InternshipController::class, 'joinInternship']);
+Route::get('internships/{internshipId}/users', [InternshipController::class, 'getUsers']);
+
+
+Route::get('users/internships', [InternshipController::class, 'getAllUsers']);
+

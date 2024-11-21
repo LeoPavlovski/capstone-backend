@@ -19,8 +19,8 @@ return new class extends Migration
 
             $table->foreign('internship_id')->references('id')->on('internships')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('status')->default('pending'); // You can use 'accepted', 'rejected', or 'pending'
-        });
+            $table->string('status')->default('pending'); // Status can be 'pending', 'accepted', 'rejected'
+        });;
     }
 
     public function down()

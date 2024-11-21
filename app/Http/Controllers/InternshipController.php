@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Internship;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class InternshipController extends Controller
@@ -68,6 +69,39 @@ class InternshipController extends Controller
         $internship->update($request->all());
         return response()->json($internship, 200);
     }
+
+    public function joinInternship(Request $request, $internshipId)
+    {
+        // Validate that the user exists and is not already enrolled
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id', // Ensure user_id exists
+        ]);
+
+        $user = User::findOrFail($validatedData['user_id']);
+        $internship = Internship::findOrFail($internshipId);
+
+        // Check if the user is already joined
+        if ($internship->users->contains($user)) {
+            return response()->json(['message' => 'User is already joined to this internship.'], 400);
+        }
+
+        // Attach user to the internship
+        $internship->users()->attach($user->id);
+
+        return response()->json([
+            'message' => 'User successfully joined the internship.',
+            'internship' => $internship
+        ], 200);
+    }
+    public function getAllUsers()
+    {
+        // Fetch all users who have joined any internship
+        $users = User::whereHas('internships') // Eloquent's whereHas to filter users with internships
+        ->get();
+
+        return response()->json($users, 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
