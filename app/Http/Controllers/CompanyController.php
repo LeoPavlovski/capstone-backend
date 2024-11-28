@@ -52,9 +52,9 @@ class CompanyController extends Controller
         if ($company) {
             $validatedData = $request->validate([
                 'companyWebsite' => 'sometimes|string|max:255',
-                'companySize' => 'sometimes|string',
+                'companySize' => 'sometimes|integer',
                 'industry' => 'sometimes|string',
-                'department' => 'required|integer',
+//                'department' => 'required|integer',
                 'contactPersonName' => 'sometimes|string|max:255',
                 'contactPersonEmail' => 'sometimes|email|max:255',
                 'contactPersonPhone' => 'sometimes|string|max:20',
