@@ -74,7 +74,7 @@ class InternshipController extends Controller
     {
         // Validate that the user exists and is not already enrolled
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id', // Ensure user_id exists
+            'user_id' => 'required|exists:users,id',
         ]);
 
         $user = User::findOrFail($validatedData['user_id']);

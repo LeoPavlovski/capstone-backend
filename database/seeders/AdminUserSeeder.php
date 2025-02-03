@@ -21,28 +21,35 @@ class AdminUserSeeder extends Seeder
             'name' => 'Admin CST',
             'email' => 'admin_cst@gmail.com',
             'roleName' => 'Admin',
-            'roleId' => 3, // Assuming 1 is the Admin role ID
-            'userCreatedBy' => null, // Can be set if needed
+            'roleId' => 3,
+            'userCreatedBy' => null,
             'department' => 1,
             'departmentName' => 'Computer Science',
             'email_verified_at' => now(),
-            'password' => Hash::make('1234'), // You can set a different password here
+            'password' => Hash::make('1234'),
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+
+
+
+
+
+
 
         // Insert Admin for Department 2
         DB::table('users')->insert([
             'name' => 'Admin Business Department',
             'email' => 'admin_e@gmail.com',
             'roleName' => 'Admin',
-            'roleId' => 3, // Assuming 1 is the Admin role ID
-            'userCreatedBy' => null, // Can be set if needed
+            'roleId' => 3,
+            'userCreatedBy' => null,
             'department' => 2,
             'departmentName' => 'Business Economics',
             'email_verified_at' => now(),
-            'password' => Hash::make('1234'), // You can set a different password here
+            'password' => Hash::make('1234'),
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),

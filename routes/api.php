@@ -20,40 +20,41 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+//USER AUTHENTICATION
 Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'loginUser']);
-Route::get('/user/getUsers', [UserController::class, 'index']);
-Route::get('courses/{id}/creator', [CourseController::class, 'getCreator']);
 Route::middleware('auth:sanctum')->get('/signin-with-token', [UserController::class, 'signinWithToken']);
-
-Route::put('/invitations/{invitationId}/status', [InvitationController::class, 'updateInvitationStatus']);
-
 Route::post('/auth/logout', [UserController::class, 'logout'])->middleware('auth:api');
-Route::apiResource('courses', CourseController::class);
-Route::apiResource('internships', InternshipController::class);
-Route::apiResource('courses', CourseController::class);
 
-Route::post('/invite', [InvitationController::class, 'invite']);
-Route::get('/student/{student_id}/invitations', [InvitationController::class, 'getStudentInvitations']);
+//USERS
+Route::get('/user/getUsers', [UserController::class, 'index']);
+
+//COURSES
+Route::get('courses/{id}/creator', [CourseController::class, 'getCreator']);
+Route::apiResource('courses', CourseController::class);
 Route::post('/join-course', [StudentCourseController::class, 'joinCourse']);
 Route::get('/students/{id}/courses', [StudentCourseController::class, 'getStudentCourses']);
 Route::get('/professors/{professorId}/students', [StudentCourseController::class, 'getStudentsForProfessor']);
 Route::post('/leave-course', [StudentCourseController::class, 'leaveCourse']);
 
-
-Route::get('professor/{professor_id}/internships', [InvitationController::class, 'getProfessorInternships']);
+//INVITATIONS
+Route::put('/invitations/{invitationId}/status', [InvitationController::class, 'updateInvitationStatus']);
+Route::post('/invite', [InvitationController::class, 'invite']);
+Route::get('/student/{student_id}/invitations', [InvitationController::class, 'getStudentInvitations']);
 Route::put('/invitation/{invitationId}', [InvitationController::class, 'updateInvitationStatus']);
 
+//INTERNSHIPS
+Route::apiResource('internships', InternshipController::class);
+Route::get('professor/{professor_id}/internships', [InvitationController::class, 'getProfessorInternships']);
 
-
+//COMPANIES
 Route::get('/companies', [CompanyController::class, 'index']);
 Route::get('/companies/{id}', [CompanyController::class, 'show']);
 Route::post('/companies', [CompanyController::class, 'store']);
 Route::put('/companies/{id}', [CompanyController::class, 'update']);
 Route::delete('/companies/{id}', [CompanyController::class, 'destroy']);
 
-
+//NEWS
 Route::get('news', [NewsController::class, 'index']);
 Route::post('news', [NewsController::class, 'store']);
 Route::get('news/{id}', [NewsController::class, 'show']);
@@ -63,12 +64,8 @@ Route::delete('news/{id}', [NewsController::class, 'destroy']);
 
 Route::post('/apply-internship', [InvitationController::class, 'applyForInternship']);
 Route::get('/student-internships', [InvitationController::class, 'getStudentCreatedInternships']);
-
 Route::get('/applications', [InvitationController::class, 'getAllApplications']);
-
 Route::post('/internships/{internshipId}/join', [InternshipController::class, 'joinInternship']);
 Route::get('internships/{internshipId}/users', [InternshipController::class, 'getUsers']);
-
-
 Route::get('users/internships', [InternshipController::class, 'getAllUsers']);
 
